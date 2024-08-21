@@ -6,8 +6,9 @@ async function setupCamera() {
     try {
         const stream = await navigator.mediaDevices.getUserMedia({ video: true });
         video.srcObject = stream;
-        await video.play();
-        return video;
+        await new Promise((resolve) => video.onloadedmetadata = resolve);
+        video.play();
+        console.log('Camera setup complete');
     } catch (error) {
         console.error('Error accessing the camera:', error);
     }
